@@ -1,0 +1,37 @@
+\documentclass[preview]{standalone}
+
+\begin{document}
+
+<<setup, include=FALSE, cache=FALSE>>=
+options(replace.assign=TRUE,width=50)
+opts_chunk$set(fig.path='figure/graphics-', cache.path='cache/graphics-', fig.align='center', dev='tikz', fig.width=8.12, fig.height=4.96, fig.show='hold', cache=TRUE, par=TRUE)
+knit_hooks$set(par=function(before, options, envir){
+if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axis=.9,mgp=c(2,.7,0),tcl=-.3)
+}, crop=hook_pdfcrop)
+@
+
+
+
+<<data,echo=T,include=FALSE>>=
+library(foreign)
+library(ggplot2)
+library(ggthemes)
+library(tikzDevice)
+d <- read.dta("~/project/2010_fetal_loss/1_data_exploration/famine_plot_2001.dta", 
+    convert.underscore = T, warn.missing.labels = F)
+@
+
+
+
+\begin{figure}
+<<fig1,eval=TRUE,echo=FALSE>>=
+g1 <- ggplot(d, aes(year, count))
+g2 <- g1 + scale_y_continuous("Cohort Size") + 
+  scale_x_continuous("Birth Cohort") + layer(geom=c("line")) + layer(geom=c("point")) 
+g3 <- g2+geom_rangeframe()+theme_tufte()
+print(g3)
+@
+%\caption{Trend in the sizes of cohorts born around the time of the famine}
+\end{figure}
+
+\end{document}
