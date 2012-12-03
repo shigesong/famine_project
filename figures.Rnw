@@ -1,5 +1,7 @@
 \documentclass[preview]{standalone}
 
+% Need 1.1b or later version of the "standalone" LaTeX package to work. 
+
 \begin{document}
 
 <<setup, include=FALSE, cache=FALSE>>=
