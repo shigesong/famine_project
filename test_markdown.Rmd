@@ -40,7 +40,7 @@ plot(s.out2)
 
 Now what do these figures show?
 
-Of course, you also need *R*, *Rstudio*, *knitr*, and *knitcitations*, which are all *free*. 
+Of course, you also need *R*, *Rstudio*, *knitr*, and *knitcitations*, which are all *free*. The source file can be found from [GitHub](https://github.com/shigesong/famine_project/blob/master/test_markdown.Rmd). 
 
 REFERENCES
 
