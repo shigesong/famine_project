@@ -1,0 +1,50 @@
+How to create a regression table in R Markdown
+========================================================
+
+```{r, echo=FALSE, message=FALSE}
+library(knitcitations)
+```
+
+Zelig is a powerful *R* package `r citep("10.1198/106186008X384898")`. It provides an unified interface to a large number of existing *R* packages for statistical estimation. In addition, it implements the powerful statistical simulation methodology proposed by `r citet("10.2307/2669316")`.
+
+The package "texreg" has a function called ``htmlreg()'' that can be used to produce regression tables in R Markdown. Here is a simple example showing how "texreg" and "Zelig" can work together:
+
+```{r, message=F, echo=T, warning=FALSE, tidy=F, results='hide'}
+library(Zelig)
+
+data(turnout)
+
+z.out1 <- zelig(vote ~ age, model = "logit", data = turnout)
+z.out2 <- zelig(vote ~ age + race, model = "logit", data = turnout)
+z.out3 <- zelig(vote ~ age + race + educate, model = "logit", data = turnout)
+```
+The "texreg" package is very powerful and flexible. I also like the "stargazer" package but, unfortunately, it does not produce html code so it cannot be used here. 
+
+```{r, results='asis', message=FALSE, echo=T, warning=FALSE, tidy=TRUE}
+library(texreg)
+
+htmlreg(list(z.out1, z.out2, z.out3), doctype=F, html.tag=F, inline.css=T, head.tag=F, body.tag=F, center=F, single.row=T, caption="")
+```
+
+Here are some figures:
+
+```{r, results='hide'}
+x.out2 <- setx(z.out2, age = 36, race = "white")
+x.out2
+s.out2 <- sim(z.out2, x = x.out2)
+```
+
+```{r, results='asis'}
+plot(s.out2)
+```
+
+Now what do these figures show?
+
+Of course, you also need *R*, *Rstudio*, *knitr*, and *knitcitations*, which are all *free*. 
+
+REFERENCES
+
+```{r, results='asis', message=FALSE, echo=FALSE}
+bibliography()
+```
+
