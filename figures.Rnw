@@ -1,4 +1,4 @@
-\documentclass[preview]{standalone}
+\documentclass{report}
 
 % Need 1.1b or later version of the "standalone" LaTeX package to work. 
 
@@ -19,7 +19,7 @@ library(foreign)
 library(ggplot2)
 library(ggthemes)
 library(tikzDevice)
-d <- read.dta("~/project/2010_fetal_loss/1_data_exploration/famine_plot_2001.dta", 
+d <- read.dta("~/mydata/project/2010_fetal_loss/1_data_exploration/famine_plot_2001.dta", 
     convert.underscore = T, warn.missing.labels = F)
 @
 
