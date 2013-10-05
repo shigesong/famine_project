@@ -8,19 +8,34 @@ library(Zelig)
 data(turnout)
 ```
 
+Descriptive statistics
+
+I want to compare the racial difference in education, income, and voting behavior. Here is what I did: 
+
+---------------------------------
+```{r, results='asis', message=FALSE, prompt=FALSE}
+library(reshape2)
+library(pander)
+panderOptions('table.style', 'rmarkdown')
+new <- melt(turnout, id=c("race", "age"))
+newcast <- dcast(new, race ~ variable, mean)
+pandoc.table(newcast, digits=3)
+```
+
+The table can be further polished, but it does the job. The point is that the *reshape2* package can transform the data into arbitrary format, which can then be converted into HTML table using the  *pander* package. 
+
 Graphical exploration
 ---------------------------------
 ```{r, fig.show='asis'}
 ggplot(turnout, aes(age, educate)) + geom_bar(stat="identity") + theme_few()
 ```
 
+Estimation
+---------------------------------
 
 ```{r, echo=FALSE, message=FALSE}
 library(knitcitations)
 ```
-
-Estimation
---------------------------------
 
 *[Zelig](http://projects.iq.harvard.edu/zelig)* is a powerful *R* package `r citep("10.1198/106186008X384898")`. It provides an unified interface to a large number of existing *R* packages for statistical estimation. In addition, it implements the powerful statistical simulation methodology proposed by `r citet("10.2307/2669316")`.
 
@@ -43,6 +58,7 @@ library(texreg)
 htmlreg(list(z.out1, z.out2, z.out3), doctype=F, html.tag=F, inline.css=T, head.tag=F, body.tag=F, center=F, single.row=T, caption="")
 ```
 
+
 Statistical simulation
 --------------------------------
 
@@ -60,7 +76,8 @@ plot(s.out2)
 
 Now what do these figures show?
 
-Of course, you also need *[R](http://www.r-project.org/)*, *[Rstudio](http://www.rstudio.com/)*, *[knitr](http://yihui.name/knitr/)*, *[ggplot2](http://ggplot2.org/)*, *[ggthemes](https://github.com/jrnold/ggthemes)*, and *[knitcitations](https://github.com/cboettig/knitcitations)*, which are all *free*. The source file can be found from [GitHub](https://github.com/shigesong/famine_project/blob/master/test_markdown.Rmd). 
+Of course, you also need *[R](http://www.r-project.org/)*, *[Rstudio](http://www.rstudio.com/)*, *[knitr](http://yihui.name/knitr/)*, *[ggplot2](http://ggplot2.org/)*, *[ggthemes](https://github.com/jrnold/ggthemes)*, *[pander](http://rapporter.github.io/pander/)*, and *[knitcitations](https://github.com/cboettig/knitcitations)*, which are all *free*. The source file can be found from [GitHub](https://github.com/shigesong/famine_project/blob/master/test_markdown.Rmd). 
+
 
 REFERENCES
 -------------------------
