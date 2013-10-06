@@ -9,10 +9,10 @@ data(turnout)
 ```
 
 Descriptive statistics
+---------------------------------
 
 I want to compare the racial difference in education, income, and voting behavior. Here is what I did: 
 
----------------------------------
 ```{r, results='asis', message=FALSE, prompt=FALSE}
 library(reshape2)
 library(pander)
@@ -20,6 +20,20 @@ panderOptions('table.style', 'rmarkdown')
 new <- melt(turnout, id=c("race", "age"))
 newcast <- dcast(new, race ~ variable, mean)
 pandoc.table(newcast, digits=3)
+```
+
+Here is another way to do it using the "htmlTable" function in the *[Gmisc](http://gforge.se/gmisc/)* package (not yet in CRAN):
+
+```{r, results='asis', message=FALSE, prompt=FALSE, warning=FALSE}
+library(Gmisc)
+
+newcast <- as.matrix(newcast)
+rownames(newcast) <- NULL
+
+# rownames(newcast) <- newcast[,1]
+# newcast <- newcast[,-1]
+
+htmlTable(newcast, digits=3, ctable=T)
 ```
 
 The table can be further polished, but it does the job. The point is that the *reshape2* package can transform the data into arbitrary format, which can then be converted into HTML table using the  *pander* package. 
