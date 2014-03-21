@@ -24,18 +24,13 @@ pandoc.table(newcast, digits=3)
 
 The table can be further polished, but it does the job. The point is that the *reshape2* package can transform the data into arbitrary format, which can then be converted into HTML table using the  *pander* package. 
 
-Here is another way to do it. This time I use the "htmlTable" function in the *[Gmisc](http://gforge.se/gmisc/)* package (not yet in CRAN):
-
 ```{r gmisc, results='asis', message=FALSE, prompt=FALSE, warning=FALSE}
-library(Gmisc)
+library(stargazer)
 
 newcast <- as.matrix(newcast)
 rownames(newcast) <- NULL
 
-# rownames(newcast) <- newcast[,1]
-# newcast <- newcast[,-1]
-
-htmlTable(newcast, digits=3, ctable=T)
+stargazer(newcast, type="html")
 ```
 
 The second table looks a lot nicer than the first one. 
@@ -43,7 +38,7 @@ The second table looks a lot nicer than the first one.
 Graphical exploration
 ---------------------------------
 ```{r ggplot, fig.show='asis'}
-ggplot(turnout, aes(age, educate)) + geom_bar(stat="identity") + theme_few()
+ggplot(turnout, aes(age, educate)) + geom_point(stat="identity") + theme_few()
 ```
 
 Estimation
@@ -70,8 +65,11 @@ The "*texreg*" package is very powerful and flexible. I also like the "*[stargaz
 
 ```{r texreg, results='asis', message=FALSE, echo=T, warning=FALSE, tidy=TRUE}
 library(texreg)
-
 htmlreg(list(z.out1, z.out2, z.out3), doctype=F, html.tag=F, inline.css=T, head.tag=F, body.tag=F, center=F, single.row=T, caption="")
+```
+
+```{r, results='asis', message=FALSE}
+stargazer(z.out1, z.out2, z.out3, type="html", style="ASR", model.number=F)
 ```
 
 
@@ -101,4 +99,3 @@ REFERENCES
 ```{r bibliography, results='asis', message=FALSE, echo=FALSE}
 bibliography()
 ```
-
