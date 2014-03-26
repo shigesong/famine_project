@@ -1,5 +1,13 @@
-Statistical analysis: A simple example
-========================================================
+---
+title: 'Statistical analysis: A simple example'
+author: "Shige Song"
+output:
+  pdf_document:
+    latex_engine: xelatex
+    natbib: yes
+  html_document: default
+  word_document: default
+---
 
 ```{r setup, message=F, echo=F, warning=FALSE, tidy=F, results='hide'}
 library(ggplot2)
