@@ -2,10 +2,10 @@
 title: 'Statistical analysis: A simple example'
 author: "Shige Song"
 output:
+  html_document: default
   pdf_document:
     latex_engine: xelatex
     natbib: yes
-  html_document: default
   word_document: default
 ---
 
@@ -71,13 +71,13 @@ z.out3 <- zelig(vote ~ age + race + educate, model = "logit", data = turnout)
 ```
 The "*texreg*" package is very powerful and flexible. I also like the "*[stargazer](http://cran.r-project.org/web/packages/stargazer/index.html)*" package but, unfortunately, it does not produce html code so it cannot be used here. 
 
-```{r texreg, results='asis', message=FALSE, echo=T, warning=FALSE, tidy=TRUE}
+```{r texreg, results='asis', message=FALSE, echo=T, warning=FALSE}
 library(texreg)
-htmlreg(list(z.out1, z.out2, z.out3), doctype=F, html.tag=F, inline.css=T, head.tag=F, body.tag=F, center=F, single.row=T, caption="")
+htmlreg(list(z.out1, z.out2, z.out3), center=T, single.row=T, caption="", star.symbol = "\\*")
 ```
 
-```{r, results='asis', message=FALSE}
-stargazer(z.out1, z.out2, z.out3, type="html", style="ASR", model.number=F)
+```{r, results='asis', message=FALSE, echo=FALSE}
+stargazer(z.out1, z.out2, z.out3, type="html", model.number=F)
 ```
 
 
